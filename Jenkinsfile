@@ -5,11 +5,11 @@ node {
     
     
     stage ('Checkout & Build') {
-        git url: 'https://github.com/itrainbatman/jfrog-maven.git'
+        git url: 'https://github.com/ChiragBarsaiya/jfrog-maven.git'
     }
  
     stage ('Unit Test') {
-        rtMaven.tool = 'Maven-3.6.1' // Tool name from Jenkins configuration
+        rtMaven.tool = 'Maven' // Tool name from Jenkins configuration
         rtMaven.run pom: 'pom.xml', goals: 'clean compile test'
     }
     
@@ -22,7 +22,7 @@ node {
     stage ('Artifactory configuration') {
         // Obtain an Artifactory server instance, defined in Jenkins --> Manage..:
          
-        rtMaven.tool = 'Maven-3.6.1' // Tool name from Jenkins configuration
+        rtMaven.tool = 'Maven' // Tool name from Jenkins configuration
         rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
         rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
         rtMaven.deployer.deployArtifacts = false // Disable artifacts deployment during Maven run
